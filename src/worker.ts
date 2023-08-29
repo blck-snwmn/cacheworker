@@ -5,7 +5,9 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const object = await env.CACHE_BUCKET.get('key-id-xxxxxx');
+		const l = await env.CACHE_BUCKET.list()
+		l.objects.forEach(o => console.log(o.key))
+		const object = await env.CACHE_BUCKET.get('key-id-xxxxxx.png');
 		if (object === null) {
 			return new Response('Not Found', { status: 404 });
 		}
